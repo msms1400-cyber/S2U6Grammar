@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 What Was It Like? - 3 Grammar</title>
+    
+    <!-- تحميل الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- تحميل مكتبة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- إعدادات Tailwind والألوان المخصصة -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0f172a',      // كحلي
+                        purple: '#6d28d9',    // بنفسجي
+                        turquoise: '#0d9488', // تركوازي
+                        gold: '#fbbf24',      // ذهبي
+                        lightBg: '#f8fafc',
+                    },
+                    fontFamily: {
+                        arabic: ['Cairo', 'sans-serif'],
+                        english: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* عزل النصوص الإنجليزية لضبط الاتجاه */
+        .en-text {
+            font-family: 'Inter', sans-serif;
+            direction: ltr;
+            display: inline-block;
+            unicode-bidi: isolate;
+        }
+
+        .en-block {
+            font-family: 'Inter', sans-serif;
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* حركات التنقل */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تصميم البطاقات والأزرار */
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-hover {
+            transition: all 0.2s;
+        }
+        .btn-hover:active {
+            transform: scale(0.96);
+        }
+
+        /* تنسيق الشهادة */
+        #certificate-area {
+            aspect-ratio: 1 / 1.414; /* نسبة A4 طولي */
+            background: white;
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            border: 6px solid #0f172a;
+            outline: 3px solid #fbbf24;
+            outline-offset: -9px;
+            width: auto;
+            height: auto;
+            max-width: 95vw; /* التكيف مع عرض الشاشة */
+            max-height: 80vh; /* التكيف مع طول الشاشة لضمان عدم القص */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cert-bg-pattern {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(#0d9488 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        .cert-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* إخفاء عناصر UI أثناء لقطة الشاشة */
+        .screenshot-mode .hide-for-screenshot {
+            display: none !important;
+        }
+        .screenshot-mode #certificate-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #cbd5e1;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow: hidden; /* إخفاء التمرير الخارجي لتبقى الشهادة ثابتة */
+        }
+        .screenshot-mode #certificate-area {
+            width: auto;
+            height: auto;
+            max-width: 95vw;
+            max-height: 85vh; /* مقاس مناسب جداً لالتقاط الشاشة على الجوال */
+            margin: auto;
+        }
+
+        /* شريط التقدم */
+        progress::-webkit-progress-bar {
+            background-color: #e2e8f0;
+            border-radius: 9999px;
+        }
+        progress::-webkit-progress-value {
+            background-color: #0d9488;
+            border-radius: 9999px;
+        }
+        progress::-moz-progress-bar {
+            background-color: #0d9488;
+            border-radius: 9999px;
+        }
+
+        /* رسالة منبثقة بديلة لـ alert */
+        #msg-box {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc2626;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            z-index: 1000;
+            transition: top 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #msg-box.show {
+            top: 20px;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Header ثابت -->
+    <header class="bg-navy text-white p-4 sticky top-0 z-50 card-shadow">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="text-center sm:text-right">
+                <div class="text-gold text-sm font-bold tracking-wider en-text">Unit 6: What Was It Like?</div>
+                <h1 class="text-xl sm:text-2xl font-bold en-text mt-1">3 Grammar</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="bg-purple/20 px-3 py-1 rounded border border-purple text-sm font-semibold">
+                    Teacher: Mohammad AlFaifi
+                </div>
+                <button id="mute-btn" onclick="toggleAudio()" class="p-2 bg-slate-700 rounded-full hover:bg-slate-600 transition" title="الصوت">
+                    🔊
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- شريط تنقل سفلي سريع (يظهر بعد الشاشة الرئيسية) -->
+    <nav id="top-nav" class="bg-white border-b border-slate-200 hidden sticky top-[76px] sm:top-[72px] z-40">
+        <div class="max-w-4xl mx-auto flex justify-between p-2">
+            <button onclick="goToScreen('home')" class="text-navy font-bold text-sm px-3 py-1 rounded hover:bg-slate-100">🏠 الرئيسية</button>
+            <span id="current-section-indicator" class="text-turquoise font-bold text-sm py-1"></span>
+        </div>
+    </nav>
+
+    <!-- صندوق الرسائل -->
+    <div id="msg-box" class="font-bold text-center">رسالة خطأ</div>
+
+    <!-- حاوية التطبيق الرئيسية -->
+    <main id="app-container" class="max-w-4xl mx-auto p-4 pb-20 fade-in"></main>
+
+    <script>
+        // --- إدارة الحالة (State Management) ---
+        let state = {
+            studentName: '',
+            currentScreen: 'home', // home, learn, practice, quiz, results, certificate
+            learnStep: 0,
+            practiceIndex: 0,
+            quizIndex: 0,
+            practiceScore: 0,
+            quizScore: 0,
+            quizAnswers: [], // { qIndex, selectedOpt, isCorrect }
+            audioEnabled: true
+        };
+
+        // --- البيانات (Data) ---
+
+        // بيانات الشرح
+        const lessonData = [
+            {
+                title: "1. فعل الكينونة في الماضي (was / were)",
+                explanation: "نستخدم <span class='en-text text-purple font-bold'>was / were</span> للتحدث عن الماضي عندما <b>لا يوجد فعل حركي</b> في الجملة (مثل التحدث عن مكان، صفة، أو حالة).",
+                ruleBox: `
+                    <div class="en-block text-lg bg-slate-100 p-3 rounded border-l-4 border-navy">
+                        <span class="text-purple font-bold">I, He, She, It</span> ➔ <b>was</b><br>
+                        <span class="text-turquoise font-bold">We, You, They</span> ➔ <b>were</b>
+                    </div>
+                `,
+                examples: [
+                    { en: "He <span class='text-purple font-bold'>was</span> at home.", ar: "هو كان في المنزل." },
+                    { en: "They <span class='text-turquoise font-bold'>were</span> very good.", ar: "هم كانوا جيدين جداً." }
+                ],
+                extra: "<b>في النفي (Negative):</b> نضيف <span class='en-text'>not</span> وتختصر إلى <span class='en-text'>wasn't / weren't</span>.<br><span class='en-text'>It wasn't good.</span> (لم يكن جيداً)."
+            },
+            {
+                title: "2. تكوين السؤال باستخدام (was / were)",
+                explanation: "لتكوين سؤال، نقوم بعكس الفاعل مع الفعل (نبدأ بـ was أو were).",
+                ruleBox: `
+                    <div class="en-block bg-slate-100 p-3 rounded border-l-4 border-navy">
+                        <b>Yes/No Questions:</b><br>
+                        <span class="text-purple font-bold">Was</span> he at home? ➔ Yes, he was. / No, he wasn't.<br>
+                        <span class="text-turquoise font-bold">Were</span> they good? ➔ Yes, they were. / No, they weren't.
+                    </div>
+                `,
+                examples: [
+                    { en: "<span class='text-purple font-bold'>How was</span> the museum tour?", ar: "كيف كانت جولة المتحف؟" },
+                    { en: "<span class='text-turquoise font-bold'>What were</span> the exhibits like?", ar: "كيف كانت المعروضات؟" }
+                ]
+            },
+            {
+                title: "3. الماضي البسيط للأفعال الحركية (Regular & Irregular Verbs)",
+                explanation: "نستخدم هذا الزمن للتحدث عن <b>أفعال (أحداث)</b> بدأت وانتهت في الماضي.",
+                ruleBox: `
+                    <div class="en-block bg-slate-100 p-3 rounded border-l-4 border-navy">
+                        <b>1. أفعال منتظمة (Regular):</b> تنتهي بـ <b>-ed</b><br>
+                        stay ➔ stay<span class="text-purple font-bold">ed</span><br><br>
+                        <b>2. أفعال شاذة (Irregular):</b> يتغير شكلها وتُحفظ<br>
+                        go ➔ <span class="text-turquoise font-bold">went</span><br>
+                        have ➔ <span class="text-turquoise font-bold">had</span>
+                    </div>
+                `,
+                examples: [
+                    { en: "I <span class='text-purple font-bold'>stayed</span> home.", ar: "أنا بقيت في المنزل." },
+                    { en: "They <span class='text-turquoise font-bold'>went</span> to the beach.", ar: "هم ذهبوا إلى الشاطئ." }
+                ],
+                extra: "<b>أهم الأفعال الشاذة في الدرس:</b><br><div class='en-text text-sm leading-relaxed mt-2 text-left' dir='ltr'>buy-bought, come-came, do-did, drink-drank, drive-drove, eat-ate, feel-felt, fly-flew, get-got, give-gave, go-went, have-had, know-knew, leave-left, make-made, meet-met, ride-rode, see-saw, sleep-slept, spend-spent, swim-swam, take-took, win-won, write-wrote.</div>"
+            },
+            {
+                title: "4. النفي والسؤال مع الأفعال (did / didn't)",
+                explanation: "عند نفي فعل في الماضي أو السؤال عنه، نستخدم <span class='en-text font-bold text-purple'>did</span>. <br><b>القاعدة الذهبية:</b> بعد <span class='en-text'>did</span> أو <span class='en-text'>didn't</span>، يعود الفعل إلى أصله (بدون إضافات).",
+                ruleBox: `
+                    <div class="en-block bg-slate-100 p-3 rounded border-l-4 border-navy text-sm">
+                        <b>Negative (-):</b><br>
+                        I <span class="text-purple font-bold">didn't stay</span> home. (NOT didn't stayed ✗)<br><br>
+                        <b>Question (?):</b><br>
+                        Where <span class="text-turquoise font-bold">did</span> they <span class="text-turquoise font-bold">go</span>? (NOT did they went ✗)
+                    </div>
+                `,
+                examples: [
+                    { en: "<span class='text-turquoise font-bold'>Did</span> you <span class='text-turquoise font-bold'>like</span> the museum?", ar: "هل أعجبك المتحف؟" },
+                    { en: "No, I <span class='text-purple font-bold'>didn't</span>.", ar: "لا، لم يعجبني. (إجابة قصيرة)" }
+                ],
+                extra: "<div class='bg-red-100 text-red-800 p-2 rounded mt-2 text-sm'><b>خطأ شائع:</b> <span class='en-text'>They didn't went. ✗</span><br><b>الصحيح:</b> <span class='en-text'>They didn't go. ✓</span> (لأن did تسحب الزمن الماضي)</div>"
+            }
+        ];
+
+        // أسئلة التدريب (12 سؤال مع توضيح فوري)
+        const practiceData = [
+            {
+                q: "Where ______ the football game?",
+                options: ["was", "were", "is", "did"],
+                ans: 0,
+                exp: "الحدث (football game) مفرد، لذلك نستخدم was."
+            },
+            {
+                q: "The exhibits ______ very good.",
+                options: ["was", "were", "are", "did"],
+                ans: 1,
+                exp: "الكلمة (exhibits - معروضات) جمع، لذلك نستخدم were."
+            },
+            {
+                q: "How ______ the guide?",
+                options: ["was", "were", "did", "do"],
+                ans: 0,
+                exp: "المرشد (the guide) مفرد، نستخدم was في السؤال."
+            },
+            {
+                q: "It ______ good. The lines to get in were very long.",
+                options: ["was", "wasn't", "weren't", "didn't"],
+                ans: 1,
+                exp: "من السياق (الطوابير كانت طويلة)، المعنى منفي: 'لم يكن جيداً' (wasn't)."
+            },
+            {
+                q: "What ______ you do last weekend?",
+                options: ["do", "does", "was", "did"],
+                ans: 3,
+                exp: "للسؤال عن فعل في الماضي نستخدم did."
+            },
+            {
+                q: "I ______ home. I didn't go out.",
+                options: ["stay", "stayed", "staying", "was stay"],
+                ans: 1,
+                exp: "نضيف -ed للفعل العادي في الإثبات في الماضي (stayed)."
+            },
+            {
+                q: "They ______ to the beach on Thursday.",
+                options: ["go", "goed", "went", "were go"],
+                ans: 2,
+                exp: "الفعل go شاذ، والماضي منه went."
+            },
+            {
+                q: "I didn't ______ home.",
+                options: ["stayed", "stay", "staying", "was stay"],
+                ans: 1,
+                exp: "بعد didn't نضع الفعل في المصدر (بدون إضافات) ➔ stay."
+            },
+            {
+                q: "Where did they ______ ?",
+                options: ["went", "go", "going", "goes"],
+                ans: 1,
+                exp: "في السؤال الذي يحتوي على did، يرجع الفعل لأصله ➔ go."
+            },
+            {
+                q: "Did you like the museum? - Yes, I ______.",
+                options: ["was", "do", "did", "liked"],
+                ans: 2,
+                exp: "الإجابة القصيرة على سؤال يبدأ بـ Did تكون: Yes, I did."
+            },
+            {
+                q: "We ______ a lot of water after the match.",
+                options: ["drink", "drinked", "drank", "drunk"],
+                ans: 2,
+                exp: "الماضي الشاذ للفعل drink هو drank."
+            },
+            {
+                q: "He ______ at the restaurant yesterday.",
+                options: ["was", "were", "did", "went"],
+                ans: 0,
+                exp: "نتحدث عن التواجد في مكان (حالة وليس فعل حركي)، الفاعل He يأخذ was."
+            }
+        ];
+
+        // أسئلة الاختبار النهائي (20 سؤال)
+        const quizData = [
+            { q: "She ______ at home yesterday.", options: ["were", "was", "is", "did"], ans: 1, rule: "be" },
+            { q: "______ the players good?", options: ["Was", "Were", "Did", "Do"], ans: 1, rule: "be" },
+            { q: "The museum tour ______ great.", options: ["were", "was", "did", "is"], ans: 1, rule: "be" },
+            { q: "They ______ very good.", options: ["was", "were", "are", "did"], ans: 1, rule: "be" },
+            { q: "Was the game exciting? - No, it ______.", options: ["weren't", "didn't", "wasn't", "isn't"], ans: 2, rule: "be" },
+            { q: "Where ______ you go on Thursday?", options: ["did", "was", "were", "do"], ans: 0, rule: "verbs" },
+            { q: "I ______ (buy) a new shirt yesterday.", options: ["buyed", "bought", "buy", "was buy"], ans: 1, rule: "verbs" },
+            { q: "They didn't ______ to the beach.", options: ["went", "go", "going", "goes"], ans: 1, rule: "negative" },
+            { q: "______ he like the food?", options: ["Was", "Were", "Did", "Does"], ans: 2, rule: "verbs" },
+            { q: "Yes, they ______.", context: "Did they eat?", options: ["were", "was", "did", "do"], ans: 2, rule: "verbs" },
+            { q: "We ______ (see) a good movie last night.", options: ["see", "seed", "saw", "was see"], ans: 2, rule: "verbs" },
+            { q: "He didn't ______ (sleep) well.", options: ["slept", "sleep", "sleeps", "sleeping"], ans: 1, rule: "negative" },
+            { q: "I ______ (have) a great time.", options: ["haved", "has", "had", "have"], ans: 2, rule: "verbs" },
+            { q: "They ______ (leave) early.", options: ["leaved", "left", "leave", "leaving"], ans: 1, rule: "verbs" },
+            { q: "What did you ______ (make)?", options: ["made", "make", "makes", "making"], ans: 1, rule: "verbs" },
+            { q: "I ______ (feel) sick yesterday.", options: ["feeled", "felt", "feel", "falling"], ans: 1, rule: "verbs" },
+            { q: "She didn't ______ (meet) her friends.", options: ["met", "meet", "meets", "meeting"], ans: 1, rule: "negative" },
+            { q: "______ you fly to Dubai?", options: ["Are", "Were", "Was", "Did"], ans: 3, rule: "verbs" },
+            { q: "It ______ Indian food. It was delicious.", options: ["was", "were", "did", "is"], ans: 0, rule: "be" },
+            { q: "We ______ (swim) in the pool.", options: ["swimmed", "swam", "swim", "swum"], ans: 1, rule: "verbs" }
+        ];
+
+        // --- الأصوات برمجياً (Web Audio API) ---
+        let audioCtx;
+        function initAudio() {
+            if(!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            if (!state.audioEnabled) return;
+            try {
+                initAudio();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                if (type === 'correct') {
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'wrong') {
+                    oscillator.type = 'sawtooth';
+                    oscillator.frequency.setValueAtTime(250, audioCtx.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.3);
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'tada') {
+                    oscillator.type = 'square';
+                    oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
+                    oscillator.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.15); // C#5
+                    oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.3); // E5
+                    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
+                    oscillator.start();
+                    oscillator.stop(audioCtx.currentTime + 0.6);
+                }
+            } catch(e) { console.log("Audio not supported or disabled"); }
+        }
+
+        function toggleAudio() {
+            state.audioEnabled = !state.audioEnabled;
+            document.getElementById('mute-btn').innerText = state.audioEnabled ? '🔊' : '🔇';
+        }
+
+        function showMessage(text) {
+            const box = document.getElementById('msg-box');
+            box.innerText = text;
+            box.classList.add('show');
+            setTimeout(() => box.classList.remove('show'), 3000);
+        }
+
+        // --- دوال العرض (Rendering) ---
+        const app = document.getElementById('app-container');
+
+        function renderHome() {
+            document.getElementById('top-nav').classList.add('hidden');
+            app.innerHTML = `
+                <div class="bg-white rounded-xl p-8 card-shadow text-center mt-10 max-w-lg mx-auto fade-in border-t-8 border-navy">
+                    <h2 class="text-2xl font-bold text-navy mb-2">مرحباً بك في درس القواعد</h2>
+                    <h3 class="text-xl text-turquoise en-text font-bold mb-6">Simple Past Tense</h3>
+                    
+                    <div class="flex justify-center gap-4 mb-8 text-sm font-semibold text-slate-600">
+                        <div class="flex flex-col items-center"><span class="text-2xl mb-1">📖</span>افهم القاعدة</div>
+                        <div class="flex flex-col items-center"><span class="text-2xl mb-1">🎯</span>تدرّب</div>
+                        <div class="flex flex-col items-center"><span class="text-2xl mb-1">🏅</span>اختبر نفسك</div>
+                    </div>
+
+                    <div class="mb-6 text-right">
+                        <label class="block text-slate-700 font-bold mb-2">اسم الطالب / الطالبة:</label>
+                        <input type="text" id="student-name" placeholder="اكتب اسمك الثلاثي هنا..." class="w-full p-3 border-2 border-slate-300 rounded-lg focus:border-turquoise focus:outline-none text-lg">
+                    </div>
+                    
+                    <button onclick="startApp()" class="w-full bg-navy text-white text-lg font-bold py-4 rounded-lg btn-hover shadow-lg hover:bg-slate-800">
+                        ابدأ التعلّم 🚀
+                    </button>
+                </div>
+            `;
+        }
+
+        function startApp() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            if(nameInput.length < 2) {
+                showMessage("الرجاء كتابة اسمك بشكل صحيح للبدء.");
+                return;
+            }
+            // منع إدخال أكواد HTML كاسم
+            state.studentName = nameInput.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            initAudio(); // تهيئة الصوت عند أول تفاعل
+            goToScreen('learn');
+        }
+
+        function goToScreen(screenName) {
+            state.currentScreen = screenName;
+            document.getElementById('top-nav').classList.remove('hidden');
+            
+            const indicator = document.getElementById('current-section-indicator');
+            
+            app.innerHTML = ''; // تفريغ الحاوية
+            
+            if (screenName === 'home') {
+                renderHome();
+            } else if (screenName === 'learn') {
+                indicator.innerText = "📖 تعلّم القواعد";
+                renderLearn();
+            } else if (screenName === 'practice') {
+                indicator.innerText = "🎯 تدريب تفاعلي";
+                state.practiceIndex = 0;
+                state.practiceScore = 0;
+                renderPractice();
+            } else if (screenName === 'quiz_intro') {
+                indicator.innerText = "📝 التقييم النهائي";
+                renderQuizIntro();
+            } else if (screenName === 'quiz') {
+                indicator.innerText = "📝 التقييم النهائي";
+                state.quizIndex = 0;
+                state.quizScore = 0;
+                state.quizAnswers = [];
+                renderQuiz();
+            } else if (screenName === 'results') {
+                indicator.innerText = "📊 النتيجة";
+                renderResults();
+            }
+        }
+
+        function renderLearn() {
+            const lesson = lessonData[state.learnStep];
+            const isLast = state.learnStep === lessonData.length - 1;
+            const isFirst = state.learnStep === 0;
+
+            let examplesHtml = lesson.examples.map(ex => `
+                <div class="mb-3 bg-white p-3 rounded border border-slate-200">
+                    <div class="en-text text-lg text-slate-800 w-full text-left" dir="ltr">${ex.en}</div>
+                    <div class="text-slate-500 text-sm mt-1">💡 ${ex.ar}</div>
+                </div>
+            `).join('');
+
+            app.innerHTML = `
+                <div class="fade-in max-w-2xl mx-auto">
+                    <!-- شريط تقدم الشرح -->
+                    <div class="flex justify-between items-center mb-4 px-2">
+                        <span class="text-sm font-bold text-slate-500">جزء ${state.learnStep + 1} من ${lessonData.length}</span>
+                        <div class="flex gap-1">
+                            ${lessonData.map((_, i) => `<div class="h-2 w-8 rounded ${i <= state.learnStep ? 'bg-turquoise' : 'bg-slate-300'}"></div>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 card-shadow border-t-4 border-turquoise">
+                        <h2 class="text-xl font-bold text-navy mb-4">${lesson.title}</h2>
+                        <p class="text-slate-700 leading-relaxed mb-4 text-lg">${lesson.explanation}</p>
+                        
+                        <div class="mb-6">
+                            ${lesson.ruleBox}
+                        </div>
+
+                        <div class="mb-4">
+                            <h3 class="font-bold text-slate-700 mb-2">أمثلة (Examples):</h3>
+                            ${examplesHtml}
+                        </div>
+
+                        ${lesson.extra ? `<div class="mt-4 p-3 bg-purple/10 border border-purple/20 rounded-lg text-slate-800">${lesson.extra}</div>` : ''}
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <button onclick="changeLearnStep(-1)" class="${isFirst ? 'invisible' : ''} bg-slate-300 text-slate-800 px-6 py-2 rounded-lg font-bold btn-hover">السابق</button>
+                        ${isLast ? 
+                            `<button onclick="goToScreen('practice')" class="bg-turquoise text-white px-8 py-2 rounded-lg font-bold shadow-md btn-hover">انتقل للتدريب 🎯</button>` 
+                            : 
+                            `<button onclick="changeLearnStep(1)" class="bg-navy text-white px-8 py-2 rounded-lg font-bold shadow-md btn-hover">التالي</button>`
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        function changeLearnStep(dir) {
+            state.learnStep += dir;
+            renderLearn();
+        }
+
+        function renderPractice() {
+            if (state.practiceIndex >= practiceData.length) {
+                // نهاية التدريب
+                app.innerHTML = `
+                    <div class="bg-white rounded-xl p-8 card-shadow text-center max-w-lg mx-auto fade-in">
+                        <div class="text-5xl mb-4">👍</div>
+                        <h2 class="text-2xl font-bold text-navy mb-4">أحسنت يا ${state.studentName}!</h2>
+                        <p class="text-lg text-slate-600 mb-6">لقد أنهيت مرحلة التدريب واستوعبت القواعد.</p>
+                        <button onclick="goToScreen('quiz_intro')" class="w-full bg-purple text-white text-lg font-bold py-3 rounded-lg btn-hover shadow">
+                            انتقل للتقييم النهائي 📝
+                        </button>
+                        <button onclick="goToScreen('practice')" class="w-full bg-slate-200 text-slate-700 mt-3 font-bold py-3 rounded-lg btn-hover">
+                            إعادة التدريب 🔄
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const qData = practiceData[state.practiceIndex];
+            const progress = ((state.practiceIndex) / practiceData.length) * 100;
+
+            app.innerHTML = `
+                <div class="fade-in max-w-2xl mx-auto">
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm font-bold text-slate-500 mb-1">
+                            <span>تدريب ${state.practiceIndex + 1} من ${practiceData.length}</span>
+                        </div>
+                        <progress value="${progress}" max="100" class="w-full h-2"></progress>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 card-shadow text-center">
+                        <p class="text-slate-500 mb-4 font-bold text-sm">اختر الإجابة الصحيحة لإكمال الجملة:</p>
+                        <div class="en-text text-2xl font-bold text-navy mb-8 w-full text-center" dir="ltr">${qData.q}</div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="practice-options">
+                            ${qData.options.map((opt, i) => `
+                                <button onclick="checkPracticeAnswer(${i}, this)" class="en-text bg-slate-100 border-2 border-slate-200 hover:border-turquoise text-lg font-bold py-3 px-4 rounded-lg btn-hover transition text-center w-full">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div id="practice-feedback" class="mt-6 hidden rounded-lg p-4 text-right">
+                            <div id="fb-title" class="text-lg font-bold mb-2"></div>
+                            <div id="fb-text" class="text-slate-700"></div>
+                            <button id="next-practice-btn" onclick="nextPractice()" class="mt-4 bg-navy text-white px-6 py-2 rounded font-bold btn-hover w-full sm:w-auto hidden">التالي</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let practiceAnswered = false;
+        function checkPracticeAnswer(selectedIdx, btnElement) {
+            if (practiceAnswered) return; // منع النقر المتكرر
+            practiceAnswered = true;
+            
+            const qData = practiceData[state.practiceIndex];
+            const isCorrect = selectedIdx === qData.ans;
+            const options = document.getElementById('practice-options').children;
+
+            // تلوين الأزرار
+            for(let i=0; i<options.length; i++) {
+                options[i].disabled = true;
+                options[i].classList.remove('hover:border-turquoise', 'bg-slate-100');
+                if (i === qData.ans) {
+                    options[i].classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                } else if (i === selectedIdx && !isCorrect) {
+                    options[i].classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                } else {
+                    options[i].classList.add('opacity-50');
+                }
+            }
+
+            const feedback = document.getElementById('practice-feedback');
+            const fbTitle = document.getElementById('fb-title');
+            const fbText = document.getElementById('fb-text');
+            const nextBtn = document.getElementById('next-practice-btn');
+
+            feedback.classList.remove('hidden', 'bg-green-50', 'bg-red-50', 'border', 'border-green-200', 'border-red-200');
+            nextBtn.classList.remove('hidden');
+
+            if (isCorrect) {
+                playSound('correct');
+                feedback.classList.add('bg-green-50', 'border', 'border-green-200');
+                fbTitle.innerHTML = "✅ إجابة صحيحة!";
+                fbTitle.classList.add('text-green-700');
+                fbTitle.classList.remove('text-red-700');
+            } else {
+                playSound('wrong');
+                feedback.classList.add('bg-red-50', 'border', 'border-red-200');
+                fbTitle.innerHTML = "❌ تحتاج إلى مراجعة";
+                fbTitle.classList.add('text-red-700');
+                fbTitle.classList.remove('text-green-700');
+                
+                // إضافة زر المحاولة مرة أخرى فقط إذا أخطأ
+                nextBtn.insertAdjacentHTML('beforebegin', `<button onclick="resetPracticeQuestion()" class="mt-2 text-navy underline font-bold ml-4">جرّب مرة أخرى</button>`);
+            }
+
+            fbText.innerHTML = `<b>السبب:</b> ${qData.exp}<br><div class='mt-2 en-text text-navy text-left w-full' dir='ltr'>${qData.q.replace('______', `<span class='font-bold underline text-purple'>${qData.options[qData.ans]}</span>`)}</div>`;
+        }
+
+        function resetPracticeQuestion() {
+            practiceAnswered = false;
+            renderPractice(); // إعادة رسم السؤال
+        }
+
+        function nextPractice() {
+            practiceAnswered = false;
+            state.practiceIndex++;
+            renderPractice();
+        }
+
+        function renderQuizIntro() {
+            app.innerHTML = `
+                <div class="bg-white rounded-xl p-8 card-shadow max-w-lg mx-auto fade-in text-center border-t-8 border-purple">
+                    <h2 class="text-2xl font-bold text-navy mb-4">التقييم النهائي 📝</h2>
+                    <p class="text-slate-700 mb-4">هذا الاختبار يتكون من <b>20 سؤالاً</b> لتقييم فهمك للدرس.</p>
+                    <ul class="text-right text-slate-600 mb-6 space-y-2 text-sm bg-slate-50 p-4 rounded border">
+                        <li>• اختر الإجابة الصحيحة لكل سؤال.</li>
+                        <li>• لا يمكنك تغيير الإجابة بعد اختيارها.</li>
+                        <li>• ستظهر النتيجة والشهادة بعد إكمال جميع الأسئلة.</li>
+                    </ul>
+                    <button onclick="goToScreen('quiz')" class="w-full bg-purple text-white text-lg font-bold py-4 rounded-lg btn-hover shadow-lg">
+                        ابدأ الاختبار الآن
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderQuiz() {
+            if (state.quizIndex >= quizData.length) {
+                goToScreen('results');
+                return;
+            }
+
+            const qData = quizData[state.quizIndex];
+            const progress = ((state.quizIndex) / quizData.length) * 100;
+
+            app.innerHTML = `
+                <div class="fade-in max-w-2xl mx-auto">
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm font-bold text-slate-500 mb-2">
+                            <span>السؤال ${state.quizIndex + 1} من ${quizData.length}</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2.5">
+                            <div class="bg-purple h-2.5 rounded-full transition-all duration-300" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 sm:p-8 card-shadow text-center">
+                        <div class="en-text text-2xl font-bold text-navy mb-8 w-full text-center leading-relaxed" dir="ltr">${qData.q}</div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            ${qData.options.map((opt, i) => `
+                                <button onclick="selectQuizAnswer(${i})" class="en-text bg-slate-50 border-2 border-slate-200 hover:border-purple hover:bg-purple/5 text-lg font-bold py-4 px-4 rounded-xl btn-hover transition text-center w-full">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectQuizAnswer(selectedIdx) {
+            const qData = quizData[state.quizIndex];
+            const isCorrect = selectedIdx === qData.ans;
+            
+            if (isCorrect) {
+                state.quizScore++;
+                playSound('correct');
+            } else {
+                playSound('wrong');
+            }
+
+            state.quizAnswers.push({
+                qIndex: state.quizIndex,
+                selectedOpt: selectedIdx,
+                isCorrect: isCorrect
+            });
+
+            state.quizIndex++;
+            renderQuiz();
+        }
+
+        function renderResults() {
+            playSound('tada');
+            const total = quizData.length;
+            const percentage = Math.round((state.quizScore / total) * 100);
+            
+            // تحليل الأخطاء
+            let errorsBe = 0;
+            let errorsVerbs = 0;
+            state.quizAnswers.forEach(ans => {
+                if(!ans.isCorrect) {
+                    if(quizData[ans.qIndex].rule === "be") errorsBe++;
+                    if(quizData[ans.qIndex].rule === "verbs" || quizData[ans.qIndex].rule === "negative") errorsVerbs++;
+                }
+            });
+
+            let recommendation = "";
+            if (percentage === 100) {
+                recommendation = "عمل ممتاز! لقد أتقنت جميع القواعد.";
+            } else if (errorsBe > errorsVerbs) {
+                recommendation = "تحتاج إلى مراجعة قاعدة (was/were) بشكل أكبر.";
+            } else if (errorsVerbs > errorsBe) {
+                recommendation = "تحتاج إلى مراجعة قاعدة الأفعال العادية والشاذة و (did).";
+            } else {
+                recommendation = "راجع القواعد مرة أخرى لتثبيت المعلومات.";
+            }
+
+            app.innerHTML = `
+                <div class="fade-in max-w-2xl mx-auto space-y-6">
+                    <!-- بطاقة النتيجة -->
+                    <div class="bg-white rounded-xl p-8 card-shadow text-center border-t-8 ${percentage >= 60 ? 'border-green-500' : 'border-gold'}">
+                        <h2 class="text-3xl font-bold text-navy mb-2">نتيجة التقييم</h2>
+                        <div class="text-xl text-slate-600 mb-6 font-bold">${state.studentName}</div>
+                        
+                        <div class="flex justify-center items-center gap-8 mb-6">
+                            <div class="text-center">
+                                <div class="text-5xl font-extrabold ${percentage >= 60 ? 'text-green-600' : 'text-gold'}">${percentage}%</div>
+                                <div class="text-sm text-slate-500 mt-1">النسبة المئوية</div>
+                            </div>
+                            <div class="w-px h-16 bg-slate-200"></div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-navy">${state.quizScore} <span class="text-2xl text-slate-400">/ ${total}</span></div>
+                                <div class="text-sm text-slate-500 mt-1">الدرجة</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-lg text-slate-700 font-bold mb-6">
+                            💡 ${recommendation}
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="showCertificate()" class="bg-navy text-white text-lg font-bold py-3 rounded-lg btn-hover shadow flex items-center justify-center gap-2">
+                                🎓 عرض الشهادة للحفظ
+                            </button>
+                            <button onclick="goToScreen('quiz')" class="bg-white border-2 border-slate-300 text-slate-700 text-lg font-bold py-3 rounded-lg btn-hover flex items-center justify-center gap-2">
+                                🔄 إعادة الاختبار
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- مراجعة الأخطاء إن وجدت -->
+                    ${percentage < 100 ? renderMistakes() : ''}
+                </div>
+            `;
+        }
+
+        function renderMistakes() {
+            let html = `<div class="bg-white rounded-xl p-6 card-shadow"><h3 class="text-xl font-bold text-red-700 mb-4 border-b pb-2">مراجعة الأخطاء:</h3><div class="space-y-4">`;
+            
+            state.quizAnswers.forEach(ans => {
+                if(!ans.isCorrect) {
+                    const qData = quizData[ans.qIndex];
+                    html += `
+                        <div class="bg-red-50 p-4 rounded border border-red-100 text-right">
+                            <div class="en-text text-lg font-bold text-slate-800 mb-2 w-full text-left" dir="ltr">${qData.q}</div>
+                            <div class="text-sm">
+                                ❌ اخترت: <span class="en-text text-red-600 font-bold">${qData.options[ans.selectedOpt]}</span><br>
+                                ✅ الصحيح: <span class="en-text text-green-600 font-bold">${qData.options[qData.ans]}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            html += `</div></div>`;
+            return html;
+        }
+
+        // --- نظام الشهادة ---
+        function showCertificate() {
+            const total = quizData.length;
+            const percentage = Math.round((state.quizScore / total) * 100);
+            const date = new Date().toLocaleDateString('en-GB'); // DD/MM/YYYY
+
+            document.body.classList.add('screenshot-mode');
+
+            app.innerHTML = `
+                <div id="certificate-container" class="fade-in">
+                    <!-- لوحة التحكم للشهادة -->
+                    <div class="absolute top-4 left-0 right-0 z-[10000] flex justify-center gap-4 hide-for-screenshot" id="cert-controls">
+                        <button onclick="closeCertificate()" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow-lg text-sm sm:text-base border-2 border-white">❌ إغلاق</button>
+                        <button onclick="toggleScreenshotUI()" class="bg-navy text-white px-6 py-2 rounded-full font-bold shadow-lg text-sm sm:text-base border-2 border-white">📸 لقطة شاشة</button>
+                    </div>
+
+                    <!-- تعليمات مؤقتة -->
+                    <div class="absolute bottom-4 left-0 right-0 text-center z-[10000] hide-for-screenshot" id="cert-instructions">
+                        <div class="bg-black/80 text-white text-sm inline-block px-4 py-2 rounded-lg max-w-md mx-auto">
+                            لحفظ شهادتك: اضغط (لقطة شاشة) لإخفاء الأزرار، ثم التقط الشاشة. 
+                            <br> <span class="text-gold">(لإعادة الأزرار، اضغط على الشهادة)</span>
+                        </div>
+                    </div>
+
+                    <!-- الشهادة الفعلية -->
+                    <div id="certificate-area" class="bg-white flex flex-col text-center shadow-2xl relative" onclick="restoreScreenshotUI()">
+                        <div class="cert-bg-pattern"></div>
+                        
+                        <div class="cert-content w-full h-full flex flex-col items-center justify-between border-2 sm:border-4 border-double border-slate-200 p-4 sm:p-6 bg-white/95 z-10">
+                            
+                            <!-- Header -->
+                            <div class="w-full flex justify-between items-start">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Ministry_of_Education_-_Saudi_Arabia.svg/200px-Ministry_of_Education_-_Saudi_Arabia.svg.png" alt="Logo" class="h-10 sm:h-14 opacity-90" onerror="this.style.display='none'">
+                                <div class="text-right">
+                                    <div class="text-xs sm:text-sm font-bold text-slate-500 en-text">Unit 6</div>
+                                    <div class="text-sm sm:text-base font-extrabold text-navy en-text">What Was It Like?</div>
+                                </div>
+                            </div>
+                            
+                            <div class="w-full border-b-2 border-navy my-2 sm:my-3"></div>
+
+                            <!-- Title -->
+                            <div class="w-full text-center">
+                                <h1 class="text-2xl sm:text-3xl font-bold text-navy en-text tracking-wide mb-1 leading-tight" style="font-family: 'Times New Roman', serif;">Certificate of Completion</h1>
+                                <h2 class="text-xl sm:text-2xl font-bold text-gold">شهادة إنجاز</h2>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="text-slate-700 w-full flex-grow flex flex-col justify-center items-center text-center my-1 sm:my-2">
+                                <p class="text-xs sm:text-sm mb-1">This is to certify that</p>
+                                <div class="text-lg sm:text-2xl font-extrabold text-purple my-1 sm:my-2 border-b-2 border-slate-300 pb-1 w-full break-words px-2">
+                                    ${state.studentName}
+                                </div>
+                                <p class="mt-1 mb-1 text-xs sm:text-sm">has successfully completed the activities and assessment for:</p>
+                                <p class="font-bold text-xs sm:text-sm text-navy bg-slate-100 p-2 rounded border border-slate-200 mt-1 inline-block">Grammar: Simple Past Tense</p>
+                            </div>
+
+                            <!-- Stats -->
+                            <div class="flex justify-center gap-2 sm:gap-4 w-full bg-slate-50 py-2 sm:py-3 rounded-lg border border-slate-200 my-2">
+                                <div class="text-center w-1/2">
+                                    <div class="text-[10px] sm:text-xs text-slate-500 uppercase mb-1">Score</div>
+                                    <div class="text-base sm:text-lg font-bold text-navy en-text">${state.quizScore} / ${total}</div>
+                                </div>
+                                <div class="w-px bg-slate-300"></div>
+                                <div class="text-center w-1/2">
+                                    <div class="text-[10px] sm:text-xs text-slate-500 uppercase mb-1">Percentage</div>
+                                    <div class="text-base sm:text-lg font-bold text-turquoise en-text">${percentage}%</div>
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="w-full flex justify-between items-end mt-1 pt-2 sm:pt-3 border-t border-slate-200">
+                                <div class="text-left w-1/3">
+                                    <div class="text-[10px] sm:text-xs text-slate-500 mb-1">Date</div>
+                                    <div class="font-bold en-text text-[11px] sm:text-sm">${date}</div>
+                                </div>
+                                <div class="text-center w-1/3 pb-1">
+                                    <div class="text-2xl sm:text-4xl">🏅</div>
+                                </div>
+                                <div class="text-right w-1/3">
+                                    <div class="text-[10px] sm:text-xs text-slate-500 mb-1">Teacher</div>
+                                    <div class="font-bold en-text text-[11px] sm:text-sm text-navy" style="font-family: cursive;">Mohammad AlFaifi</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeCertificate() {
+            document.body.classList.remove('screenshot-mode');
+            renderResults(); // العودة للنتائج
+        }
+
+        function toggleScreenshotUI() {
+            const controls = document.getElementById('cert-controls');
+            const instructions = document.getElementById('cert-instructions');
+            controls.style.display = 'none';
+            instructions.style.display = 'none';
+            // إظهار رسالة صغيرة تختفي للإرشاد
+            showMessage("تم إخفاء الأزرار. التقط الشاشة الآن. (اضغط على الشهادة لإعادة الأزرار)");
+        }
+
+        function restoreScreenshotUI() {
+            const controls = document.getElementById('cert-controls');
+            const instructions = document.getElementById('cert-instructions');
+            if(controls && instructions) {
+                controls.style.display = 'flex';
+                instructions.style.display = 'block';
+            }
+        }
+
+        function shareScreenshotInstruction() {
+            showMessage("لا يمكن مشاركة الصورة مباشرة من المتصفح. يرجى التقاط لقطة شاشة ومشاركتها من ألبوم الصور الخاص بك.");
+        }
+
+        // بدء التطبيق
+        window.onload = () => {
+            renderHome();
+        };
+
+    </script>
+</body>
+</html>
